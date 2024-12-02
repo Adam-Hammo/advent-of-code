@@ -1,1 +1,11 @@
-print(len(p1:={r for r in [tuple(int(x) for x in r.split()) for r in open(f"2.in").read().split("\n")] if all(x<y if r[0]<r[1] else x>y for x,y in zip(r,r[1:])) and all(abs(x-y)<=3 for x,y in zip(r,r[1:]))}), len(p1|{r for r in [tuple(int(x) for x in r.split()) for r in open(f"2.in").read().split("\n")] if any(all(x<y if r[0]<r[1] else x>y for x,y in zip((r[:i]+r[i+1:]),((r[:i]+r[i+1:])[1:]))) and all(abs(x-y)<=3 for x,y in zip((r[:i]+r[i+1:]),((r[:i]+r[i+1:])[1:]))) for i in range(len(r)))}))
+from itertools import combinations
+
+def is_safe(r):
+    return tuple(sorted(r)) in (r,r[::-1]) and all(0<abs(x-y)<=3 for x,y in zip(r,r[1:]))
+
+d = [tuple(int(x) for x in r.split()) for r in open("2.in").read().split("\n")]
+
+print(
+    sum(is_safe(r) for r in d),
+    sum(any(is_safe(c) for c in combinations(r,len(r)-1)) for r in d),
+)

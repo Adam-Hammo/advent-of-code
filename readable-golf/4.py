@@ -1,0 +1,3 @@
+g = [list(x) for x in open("4.in").read().split("\n")]
+def search(dirs,r,c,i,target): return {d: (dr,dc) for d, (dr,dc) in dirs.items() if 0<=r+i*dr<len(g) and 0<=c+i*dc<len(g[0]) and g[r+i*dr][c+i*dc]==target[i]}
+print(sum(len(search(search(search({"u": (-1, 0), "d": (1, 0), "l": (0, -1), "r": (0, 1), "ul": (-1, -1), "ur": (-1, 1), "dl": (1, -1), "dr": (1, 1)}, r, c, 1, "XMAS"), r, c, 2, "XMAS"), r, c, 3, "XMAS")) for r in range(len(g)) for c in range(len(g[r])) if g[r][c] == "X"), sum(1 for r in range(len(g)) for c in range(len(g[r])) if g[r][c] == "A" and len(search(search({"ul": (-1, -1), "ur": (-1, 1), "dl": (1, -1), "dr": (1, 1)}, r, c, 1, "AMS"), r, c, -1, "AMS")) == 2))

@@ -9,4 +9,4 @@ def eval_stone(s, b):
     else: a = eval_stone(s*2024, b-1)
     cache[(s,b)] = a
     return a
-print(sum(eval_stone(s, 900) for s in stones))
+print(sum(eval_stone(s, 75) for s in stones))

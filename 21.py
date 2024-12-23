@@ -25,7 +25,7 @@ robot_adjacency = {
 }
 
 @cache
-def press_key(key: str, target: str, layer: int, key_presses: int, visited: str, keys_above: str, n_robots: int) -> int:
+def press_key(key: str, target: str, layer: int, key_presses: int, visited: str, directions: str, n_robots: int) -> int:
     if not target or layer > n_robots:
         return key_presses
     
@@ -33,12 +33,12 @@ def press_key(key: str, target: str, layer: int, key_presses: int, visited: str,
         key_presses += 1
 
     if key == target[0]:
-        return press_key(key, target[1:], layer, key_presses, "", "", n_robots) + press_key("A", keys_above+"A", layer+1, 0, "", "", n_robots)
+        return press_key(key, target[1:], layer, key_presses, "", "", n_robots) + press_key("A", directions+"A", layer+1, 0, "", "", n_robots)
     
     bp = math.inf
     for direction, next_key in (robot_adjacency if layer else door_adjacency)[key].items():
         if next_key in visited: continue
-        bp = min(bp, press_key(next_key, target, layer, key_presses, visited + next_key, keys_above + direction, n_robots))
+        bp = min(bp, press_key(next_key, target, layer, key_presses, visited + next_key, directions + direction, n_robots))
 
     return bp
 

@@ -35,15 +35,9 @@ def compute(program: list[int], _input: Optional[int] = None) -> list[int]:
                 output.append(program[ref(1)])
                 p += 2
             elif opcode == 5:
-                if program[ref(1)]:
-                    p = program[ref(2)]
-                else:
-                    p += 3
+                p = program[ref(2)] if program[ref(1)] else p + 3
             elif opcode == 6:
-                if not program[ref(1)]:
-                    p = program[ref(2)]
-                else:
-                    p += 3
+                p = program[ref(2)] if not program[ref(1)] else p + 3
             elif opcode == 7:
                 program[ref(3)] = int(program[ref(1)] < program[ref(2)])
                 p += 4

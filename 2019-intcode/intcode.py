@@ -6,6 +6,14 @@ def parse_program(program: str) -> defaultdict[int, int]:
     return defaultdict(int, {i: int(p) for i, p in enumerate(program.split(","))})
 
 
+def input_until_output(computer: Generator[int, int, None], _input: int) -> int:
+    # Used to constantly send input when output isn't expected immediately afterward
+    output = computer.send(_input)
+    while output is None:
+        output = computer.send(_input)
+    return output
+
+
 def compute(program: list[int]) -> Generator[int, int, None]:
     def get_reference(
         p: int, offset: int, relative_base: int, parameter_modes: int

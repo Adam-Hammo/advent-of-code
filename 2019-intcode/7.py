@@ -33,12 +33,9 @@ for phases in permutations(amplifiers):
     while not finished:
         for phase in phases:
             try:
-                _prior_phase_output = phase_computers[phase].send(prior_phase_output)
-                while _prior_phase_output is None:
-                    _prior_phase_output = phase_computers[phase].send(
-                        prior_phase_output
-                    )
-                prior_phase_output = _prior_phase_output
+                prior_phase_output = intcode.input_until_output(
+                    phase_computers[phase], prior_phase_output
+                )
             except StopIteration:
                 finished = True
 

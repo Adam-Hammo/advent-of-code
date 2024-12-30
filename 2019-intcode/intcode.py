@@ -1,7 +1,7 @@
-from typing import Optional
+from typing import Generator
 
 
-def compute(program: list[int], _input: Optional[int] = None) -> list[int]:
+def compute(program: list[int]) -> Generator[int, int, None]:
     def get_reference(p: int, offset: int, parameter_modes: int) -> int:
         parameter_mode = (parameter_modes // 10 ** (offset - 1)) % 10
         if parameter_mode == 0:
@@ -14,7 +14,6 @@ def compute(program: list[int], _input: Optional[int] = None) -> list[int]:
             )
 
     p = 0
-    output: list[int] = []
     try:
         while (instruction := program[p]) != 99:
             opcode, parameter_modes = instruction % 100, instruction // 100
@@ -27,12 +26,10 @@ def compute(program: list[int], _input: Optional[int] = None) -> list[int]:
                 program[ref(3)] = program[ref(1)] * program[ref(2)]
                 p += 4
             elif opcode == 3:
-                if _input is None:
-                    raise Exception("Input opcode reached but no input specified.")
-                program[ref(1)] = _input
+                program[ref(1)] = yield
                 p += 2
             elif opcode == 4:
-                output.append(program[ref(1)])
+                yield program[ref(1)]
                 p += 2
             elif opcode == 5:
                 p = program[ref(2)] if program[ref(1)] else p + 3
@@ -50,5 +47,3 @@ def compute(program: list[int], _input: Optional[int] = None) -> list[int]:
                 )
     except IndexError:
         raise Exception(f"Segfault")
-
-    return output

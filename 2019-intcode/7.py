@@ -1,7 +1,7 @@
 import intcode
 from itertools import permutations
 
-program: list[int] = [int(x) for x in open("input/7.in").read().split(",")]
+program = intcode.parse_program(open("input/7.in").read())
 
 max_output = 0
 for phases in permutations(range(5)):

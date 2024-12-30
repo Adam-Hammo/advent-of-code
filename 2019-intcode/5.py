@@ -1,6 +1,6 @@
 import intcode
 
-program: list[int] = [int(x) for x in open("input/5.in").read().split(",")]
+program = intcode.parse_program(open("input/5.in").read())
 
 p1 = intcode.compute(program.copy())
 next(p1)

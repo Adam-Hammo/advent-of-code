@@ -14,7 +14,7 @@ def input_until_output(computer: Generator[int, int, None], _input: int) -> int:
     return output
 
 
-def compute(program: list[int]) -> Generator[int, int, None]:
+def computer(program: list[int]) -> Generator[int, int, None]:
     def get_reference(
         p: int, offset: int, relative_base: int, parameter_modes: int
     ) -> int:

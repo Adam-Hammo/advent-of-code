@@ -25,16 +25,18 @@ def paint_panels(
         return hull
 
 
-p1 = intcode.compute(program.copy())
+p1 = intcode.computer(program.copy())
 next(p1)
 hull: defaultdict[tuple[int, int], int] = defaultdict(int)
 print(f"Part 1: {len(paint_panels(p1, defaultdict(int)).keys())}")
 
-p2 = intcode.compute(program.copy())
+p2 = intcode.computer(program.copy())
 next(p2)
 hull = paint_panels(p2, defaultdict(int, {(0, 0): 1}))
+
 X, Y = [c[0] for c in hull.keys()], [c[1] for c in hull.keys()]
 x0, x1, y0, y1 = min(X), max(X), min(Y), max(Y)
+
 print(f"Part 2:")
 for y in range(y0, y1 + 1):
     for x in range(x0, x1 + 1):

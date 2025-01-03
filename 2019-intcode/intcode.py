@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Generator
+from typing import Generator, Optional
 
 
 def parse_program(program: str) -> defaultdict[int, int]:
@@ -12,6 +12,16 @@ def input_until_output(computer: Generator[int, int, None], _input: int) -> int:
     while output is None:
         output = computer.send(_input)
     return output
+
+
+def wait_until_input(
+    computer: Generator[int, int, None], delimiter: Optional[int] = None
+) -> tuple[list[int], int]:
+    # Used to wait until the program has output None (expects input)
+    output = [next(computer)]
+    while output[-1] != delimiter:
+        output.append(next(computer))
+    return output[:-1]
 
 
 def computer(program: list[int]) -> Generator[int, int, None]:

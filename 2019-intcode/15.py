@@ -12,8 +12,8 @@ BACKTRACK = {1: 2, 2: 1, 3: 4, 4: 3}
 
 def move_robot(x: int, y: int, V: set[tuple[int]]):
     target = None
+    V.add((x, y))
     for command, (dx, dy) in DIRECTIONS.items():
-        V.add((x, y))
         if (x + dx, y + dy) in V:
             continue
         status = intcode.input_until_output(COMPUTER, command)
@@ -30,5 +30,6 @@ def move_robot(x: int, y: int, V: set[tuple[int]]):
 target = move_robot(0, 0, set())
 
 print(f"Part 1: {nx.shortest_path_length(GRAPH, (0, 0), target)}")
+
 distances = nx.single_source_shortest_path_length(GRAPH, target)
 print(f"Part 2: {max(l for l in distances.values())}")
